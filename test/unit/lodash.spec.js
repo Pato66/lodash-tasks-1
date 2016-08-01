@@ -148,7 +148,7 @@ describe('Lodash training', function() {
                     expect(_.set.apply(_, params)).to.eql({
                         'rectangle': [{
                             'rect1': {
-                                'width': 4,
+                                'width': 8,
                                 'height': 8
                             },
                             'rect2': {
