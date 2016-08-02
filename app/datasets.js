@@ -3,24 +3,25 @@ module.exports = {
 
     functions: function() {
         function Foo() {
-            this.square = 'square';
+            this.square = "square";
         }
-
-        Foo.prototype.cube = 'cube;';
-        return [ new Foo];
+        Foo.prototype.cube = 1;
+        function Foo2() {
+            this.a = 'a';
+            this.b = 'b';
+        }
+        Foo2.prototype.square=function(){return 0;};
+        return [ new Foo ];
     },
-
+//---------------------------------------------------------------
     functionsIn: function() {
         function Foo() {
-            this.square = 'square';
+            this.square = "square";
         }
-
-
         Foo.prototype.cube = function(){return 0;};
-        Foo.prototype.square= 'square0';
         return [ new Foo];
     },
-
+//----------------------------------------------------------------
     pick1: function() {
         var obj={'red':1, 'green':2, 'blue':3, 'yellow':4};
         var tab=['red','yellow'];
@@ -42,7 +43,7 @@ module.exports = {
         var obj={'rectangle':[
             {
                 "rect1": {
-                    "height": 8,
+                    "height": 4,
                     "width": 8
                 },
                 "rect2": {
@@ -52,16 +53,16 @@ module.exports = {
             }
             ]
         }
-        var str='rectangle.rect1.height';
-        return [obj,str,9];
+        var str='rectangle[0].rect1.height';
+        return [obj,str,8];
 },
 
     set2: function() {
         var obj={'rectangle':[
             {
                 "rect1": {
-                    "height": 8,
-                    "width": 8
+                    "height": 3,
+                    "width": 4
                 },
                 "rect2": {
                     "height": 6,
@@ -69,9 +70,9 @@ module.exports = {
                 }
             }
         ]
-        }
-        var tab=['rectangle','rect1','height'];
-        return [obj,tab,9];
+        };
+        var tab=['rectangle','0','rect1','height'];
+        return [obj, tab, 8];
     },
 
     setWith: function() {
@@ -106,31 +107,53 @@ module.exports = {
     },
 
     transform2: function() {
-        return [];
+        return [ {"width": ["5"],"weight": ["10"],"height": ["600"] } , function(result, value, key) {
+            (result[value] || (result[value] = [])).push(key);
+        }, {} ];
     },
 
     unset1: function() {
-        return [];
+        var object = {"rectangle":[{"square":{"height": 4}}] };
+        return [ object, 'rectangle[0].square.height' ];
     },
 
     unset2: function() {
-        return [];
+        var object = {"triangle":[{"deminsions":{"d": 5}}] };
+        return [object,['triangle','0','deminsions','d']];
     },
 
     update: function() {
-        return [];
+        var obj = { 'rectangle': [{ 'rect1': { 'width': 4, 'height': 4}}] };
+        var str = 'rectangle[0].rect1.height';
+        var fun = function(n){return 2*n;};
+        return [obj, str, fun];
     },
 
     updateWith: function() {
-        return [];
+        var object = {"rectangle":[ {"rect2": {"height": 6, "width":4} } ] };
+        var str='rectangle[0].rect2.height';
+        var fun = function(n){return 2*n;};
+        return [ object, str, fun];
     },
 
     values: function() {
-        return [];
+        function Foo() {
+            this.a = null;
+            this.b = 2;
+            //this.c = 3;
+        }
+
+        Foo.prototype.c = '3';
+        return [new Foo];
     },
     
     valuesIn: function() {
-        return [];
+        function Foo() {
+            this.a = 6;
+        }
+
+        Foo.prototype.c = 7;
+        return [new Foo];
     },
 
 };
