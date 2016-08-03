@@ -43,9 +43,7 @@ module.exports = {
 
     defaultsDeep: function(){
 
-        var obj1 = { data : { text: 'Tim', reverseText: 'miT'} };//data:{text: 'Tim', reverseText: 'miT'}    data: {text: 'mouse', reverseText: 'esuom'}
-        var obj2 = { data : { text: 'mouse', reverseText: 'esuom'} };
-        return [obj1, obj2];
+        return [{'data':{'text':'Tim','reversedText':'miT'}},{'data':{'text':'mouse','reversedText':'esuom','lengthText':function () {return 5;}}}];
     },
 
     findKey1: function(obj){
@@ -106,8 +104,8 @@ module.exports = {
 
         var obj1 = new oo(4, 4);
         oo.prototype.head = 1;
-        //obj1.head=2;
         return [obj1, function (x) {
+            oo.prototype.head=2;
             return 2 * x;
         }];
     },
@@ -189,12 +187,12 @@ module.exports = {
 
     invoke1: function(obj){
         
-        return [obj,'unshift qwertyuiopasdfghjklz',99];
+        return [obj,'key[0].number.random.unshift',99];
     },
 
     invoke2: function(obj){
 
-        return [obj,'pop abqwertyuioplkjhgfds',99];
+        return [obj,'key[0].number.random.pop'];
     },
 
     keys: function(){
@@ -221,41 +219,41 @@ module.exports = {
 
     mapKeys2: function(obj){
 
-        return [{ 'person': 1, 'person1': 2 }, function(value, key) {
-            return key + value;
-        }];
+        return [ obj, function(){} ];
     },
 
     mapValues1: function(obj){
-        return [obj, function(o) { return o.age; }];
+        return [obj, function(o) { return o.vmax; }];
     },
 
     mapValues2: function(obj){
 
-        return [obj, 'abcd'];
+        return [obj, 'name'];
     },
 
     merge: function(){
-        function oo(number,string){
-            this.number=number;
-            this.string=string;
-        }
-        var obj1 = { 'data':[{ 'owner' :['Adam','Tom','John']}] };
-        var obj2 = { 'data':['cat','dog','ostrich'] };
-        //oo.prototype.square = 36;
+        var obj1={
+            'data':[{'owner':'Adam'},{'owner':'Tom'},{'owner':'John'}]
+        };
+
+        var obj2={
+            'data':[{'cats':3},{'dogs':5},{'ostrich':1}]
+        };
         return [obj1, obj2];
     },
 
     mergeWith: function(){
-        var obj1={'website': ['blog'], 'technique': ['HTML5']};
-        var obj2={'website': ['shop'], 'technique': ['xHTML']};
-        function customizer(objValue, srcValue) {
-            if (_.isArray(objValue)) {
-                return objValue.concat(srcValue);
-            }
-        }
+        var object1={
+            'website':['blog'],'technique':['HTML5']
+        };
 
-        return [ obj1, obj2, function(){return obj1.website;} ];
+        var object2={
+            'website':['shop'],'technique':['xHTML']
+        };
+
+        return [object1,object2,function (obj1,obj2) {
+            return obj1.concat(obj2);
+        }];
     },
 
     omit1: function(obj){
@@ -275,21 +273,21 @@ module.exports = {
 
     result1: function(obj){
 
-        return [obj,'exercises.tasks[0].thirdTask'];
+        return [obj,'exercises.tasks[2].thirdTask'];
     },
 
     result2: function(obj) {
 
-        return [obj,['exercises','tasks','0','thirdTask']];
+        return [obj,['exercises','tasks','2','thirdTask']];
     },
 
     result3: function(obj){
 
-        return [obj,'exercises.tasks[0].thirdTask','be cool'];
+        return [obj,'exercises.tasks.thirdTask','default value'];
     },
 
     result4: function(obj){
 
-        return [obj,'exercises.tasks[0].thirdTask', function(){return 'be cool';}];
+        return [obj,'exercises.tasks.thirdTask', function(){return 'default value';}];
     }
 };
